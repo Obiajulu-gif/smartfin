@@ -102,7 +102,7 @@ const Sidebar = () => {
 							<span>Accounting</span>
 						</Link>
 						<Link
-							href="#transactions"
+							href="/chat"
 							className="flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
@@ -122,7 +122,9 @@ const Sidebar = () => {
 				{/* Bottom Icons */}
 				<div className="px-8 border-t border-gray-700 py-3 flex justify-between">
 					<FaBell className="text-white cursor-pointer" />
-					<FaComments className="text-white cursor-pointer" />
+					<Link href="/chat">
+						<FaComments className="text-white cursor-pointer" />
+					</Link>
 					<FaCog className="text-white cursor-pointer" />
 					<FaFolder className="text-white cursor-pointer" />
 				</div>
