@@ -11,7 +11,7 @@ export const metadata = {
 };
 export default function DashboardLayout({ children }) {
 	return (
-		<div className="flex h-screen">
+		<div className="flex min-h-screen">
 			{/* Sidebar */}
 			<Sidebar />
 			<div className="flex-1 bg-gray-100">

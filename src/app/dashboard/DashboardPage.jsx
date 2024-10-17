@@ -23,9 +23,11 @@ export default function DashboardPage() {
 						starts here.
 					</p>
 				</div>
-				<button className="px-4 py-2 border border-indigo-500 text-indigo-500 rounded-lg hover:bg-indigo-50">
-					Transact
-				</button>
+				<Link href="/transactions">
+					<button className="px-4 py-2 border border-indigo-500 text-indigo-500 rounded-lg hover:bg-indigo-50">
+						Transact
+					</button>
+				</Link>
 			</div>
 
 			{/* Inventory Card */}
@@ -46,6 +48,4 @@ export default function DashboardPage() {
 			</div>
 		</div>
 	);
-
-
 }

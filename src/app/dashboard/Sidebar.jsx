@@ -43,13 +43,15 @@ const Sidebar = () => {
 				<div className="px-11 py-4">
 					{/* Sidebar Header */}
 					<div className="flex items-center h-16 ">
-						<Image
-							src="/images/logo.svg"
-							alt="SmartFin Logo"
-							width={60}
-							height={60}
-						/>
-						<h2 className="ml-3 text-xl font-bold text-white">SmartFin</h2>
+						<Link href="/">
+							<Image
+								src="/images/logo.svg"
+								alt="SmartFin Logo"
+								width={60}
+								height={60}
+							/>
+							<h2 className="ml-3 text-xl font-bold text-white">SmartFin</h2>
+						</Link>
 					</div>
 					{/* Sidebar Links */}
 					<nav className="mt-10 space-y-4">
