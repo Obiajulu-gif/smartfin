@@ -33,7 +33,7 @@ const Sidebar = () => {
 	};
 
 	return (
-		<div className="flex h-screen">
+		<div className="flex h-screen text-white">
 			{/* Sidebar */}
 			<div
 				className={`absolute sm:relative z-20 w-64 bg-gray-800 text-gray-300 shadow-lg md:h-full flex-col justify-between ${
@@ -42,8 +42,8 @@ const Sidebar = () => {
 			>
 				<div className="px-11 py-4">
 					{/* Sidebar Header */}
-					<div className="flex items-center h-16 ">
-						<Link href="/">
+					<div className="flex items-center h-16">
+						<Link href="/" className="flex items-center space-x-2">
 							<Image
 								src="/images/logo.svg"
 								alt="SmartFin Logo"
@@ -57,7 +57,7 @@ const Sidebar = () => {
 					<nav className="mt-10 space-y-4">
 						<Link
 							href="/dashboard"
-							className="flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 transition-colors duration-200"
+							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
 							<FaTachometerAlt />
@@ -65,7 +65,7 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							href="/dashboard/transactions"
-							className="flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 transition-colors duration-200"
+							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
 							<FaFileInvoiceDollar />
@@ -73,7 +73,7 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							href="#expenses"
-							className="flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 transition-colors duration-200"
+							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
 							<FaChartLine />
@@ -81,7 +81,7 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							href="#contacts"
-							className="flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 transition-colors duration-200"
+							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
 							<FaPeopleArrows />
@@ -89,7 +89,7 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							href="#products"
-							className="flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 transition-colors duration-200"
+							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
 							<FaBoxOpen />
@@ -97,7 +97,7 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							href="#accounting"
-							className="flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 transition-colors duration-200"
+							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
 							<FaReceipt />
@@ -105,7 +105,7 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							href="/chat"
-							className="flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 transition-colors duration-200"
+							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
 							<FaRobot />
@@ -113,7 +113,7 @@ const Sidebar = () => {
 						</Link>
 						<Link
 							href="#pos"
-							className="flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 transition-colors duration-200"
+							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
 							<FaToolbox />
@@ -123,12 +123,12 @@ const Sidebar = () => {
 				</div>
 				{/* Bottom Icons */}
 				<div className="px-8 border-t border-gray-700 py-3 flex justify-between">
-					<FaBell className="text-white cursor-pointer" />
+					<FaBell className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
 					<Link href="/chat">
-						<FaComments className="text-white cursor-pointer" />
+						<FaComments className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
 					</Link>
-					<FaCog className="text-white cursor-pointer" />
-					<FaFolder className="text-white cursor-pointer" />
+					<FaCog className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
+					<FaFolder className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
 				</div>
 			</div>
 

@@ -61,7 +61,11 @@ export default function Navbar() {
 				{/* Mobile Menu Button */}
 				<div className="md:hidden flex items-center">
 					<button onClick={handleNav}>
-						{nav ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
+						{nav ? (
+							<AiOutlineClose size={24} className="bg-white" />
+						) : (
+							<AiOutlineMenu size={24} className="bg-white" />
+						)}
 					</button>
 				</div>
 			</div>
@@ -86,7 +90,7 @@ export default function Navbar() {
 							</span>
 						</Link>
 						<button onClick={handleNav}>
-							<AiOutlineClose size={24} />
+							<AiOutlineClose size={24} className="bg-white" />
 						</button>
 					</div>
 					<Link

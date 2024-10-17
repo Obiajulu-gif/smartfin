@@ -25,7 +25,7 @@ export default function DashboardPage() {
 					</p>
 				</div>
 				<Link href="/transactions">
-					<button className="px-4 py-2 border border-indigo-500 text-indigo-500 rounded-lg hover:bg-indigo-50">
+					<button className="px-4 py-2 border border-indigo-500 text-white rounded-lg hover:bg-indigo-400">
 						Transact
 					</button>
 				</Link>
@@ -43,7 +43,7 @@ export default function DashboardPage() {
 						SmartFin.
 					</p>
 				</div>
-				<button className="px-4 py-2 border border-indigo-500 text-indigo-500 rounded-lg hover:bg-indigo-50">
+				<button className="px-4 py-2 border border-indigo-500 text-white rounded-lg hover:bg-indigo-400">
 					Manage
 				</button>
 			</div>
