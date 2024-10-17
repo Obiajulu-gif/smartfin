@@ -1,4 +1,5 @@
 // pages/dashboard/page.js
+import Link from "next/link";
 export default function DashboardPage() {
 	return (
 		<div className="container mx-auto p-8 ">
