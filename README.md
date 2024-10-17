@@ -75,7 +75,3 @@ This project is made possible thanks to the efforts of the following contributor
 - [**Ekenesamuel8**](https://github.com/Ekenesamuel8/) - **Ekene Samuel Chinwendu**
 
 If you would like to contribute, please feel free to submit a pull request!If you would like to contribute, please feel free to submit a pull request!
-
-License
-This project is licensed under the MIT License. See the LICENSE file for more information.
-
