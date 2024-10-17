@@ -14,18 +14,14 @@ const Navbar = () => {
 	return (
 		<header className="bg-indigo-600 text-white p-4 flex justify-between items-center">
 			{/* Logo and Title */}
-			<h1 className="text-lg font-bold px-10">Dashboard</h1>
+			<h1 className="text-lg font-bold px-10 text-white">Dashboard</h1>
 
 			{/* Menu for larger screens */}
-			<div className=" md:flex items-center space-x-4">
-				<Link href="#help" className="hover:underline">
-					Help Center
-				</Link>
-				<button className="px-4 py-2 bg-yellow-500 text-indigo-600 rounded-lg">
-					Quick Action
+			<div className=" md:flex items-center space-x-2">
+				<button className="px-4 py-2 hover:bg-yellow-800 hover:text-white bg-yellow-500 text-indigo-600 rounded-lg">
+					Logout
 				</button>
 			</div>
-
 		</header>
 	);
 };

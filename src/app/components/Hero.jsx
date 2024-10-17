@@ -1,7 +1,26 @@
-// components/Hero.js
+"use client";
 import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Hero() {
+	// i added the typewrite effect here
+	const [text, setText] = useState("");
+	const fullText = "  Simplify your business accounting with SmartFin";
+
+	useEffect(() => {
+		let index = 0;
+		const interval = setInterval(() => {
+			if (index < fullText.length - 1) {
+				setText((prev) => prev + fullText[index]);
+				index++;
+			} else {
+				clearInterval(interval);
+			}
+		}, 50);
+		return () => clearInterval(interval);
+	}, [fullText]);
+
 	return (
 		<section className="relative  bg-gradient-to-br from-white to-purple-50 p-8 md:p-16 flex flex-col md:flex-row items-center">
 			{/* Text Content */}
@@ -9,9 +28,7 @@ export default function Hero() {
 				<div className="inline-block bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-semibold text-sm">
 					🔥 AI-IN-ONE FINANCE TOOL
 				</div>
-				<h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-					Simplify your business accounting with SmartFin
-				</h1>
+				<h1 className="text-4xl md:text-5xl font-bold text-gray-900">{text}</h1>
 				<p className="text-gray-700">
 					Record transactions, manage finances, track inventory, and create
 					reports—all in one place
@@ -20,9 +37,11 @@ export default function Hero() {
 					No more record books, no more errors, just time saved.
 				</p>
 				<div className="flex space-x-4">
-					<button className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700">
-						Get Started
-					</button>
+					<Link href="/signup">
+						<button className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 animate-bounce">
+							Get Started
+						</button>
+					</Link>
 					<button className="px-6 py-3 bg-transparent text-gray-900 border border-gray-400 rounded-lg font-medium hover:border-gray-900">
 						Book Demo
 					</button>

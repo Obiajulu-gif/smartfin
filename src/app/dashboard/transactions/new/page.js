@@ -18,7 +18,7 @@ const TransactionForm = () => {
 	};
 
 	return (
-		<div className="p-6 bg-white shadow-md rounded-lg max-w-2xl mx-auto">
+		<div className="p-6 bg-white shadow-md rounded-lg max-w-2xl mx-auto text-blue-300">
 			<div className="flex space-x-4 mb-6">
 				{/* Toggle Buttons */}
 				<button
@@ -43,7 +43,7 @@ const TransactionForm = () => {
 				</button>
 			</div>
 
-			<div>
+			<div className="text-indigo-800">
 				{/* Money In Form */}
 				{transactionType === "in" && (
 					<form className="space-y-4">
