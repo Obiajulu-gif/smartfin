@@ -118,7 +118,7 @@ const Transactions = () => {
 				<p className="text-gray-500">No transaction recorded</p>
 
 				<Link href="/dashboard/transactions/new">
-					<button className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg">
+					<button className="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-400 text-white rounded-lg">
 						+ Add transaction
 					</button>
 				</Link>
