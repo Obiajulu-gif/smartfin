@@ -31,7 +31,10 @@ export default function Navbar() {
 					<Link href="/dashboard" className="hover:text-indigo-600">
 						Dashboard
 					</Link>
-					<Link href="#transactions" className="hover:text-indigo-600">
+					<Link
+						href="/dashboard/transactions"
+						className="hover:text-indigo-600"
+					>
 						Transactions
 					</Link>
 					<Link href="#insights" className="hover:text-indigo-600">
@@ -47,12 +50,12 @@ export default function Navbar() {
 
 				{/* Desktop Login/Get Started */}
 				<div className="hidden md:flex items-center space-x-4">
-					<Link href="#login" className="hover:text-indigo-600">
+					<Link href="/login" className="hover:text-indigo-600">
 						Log in
 					</Link>
 					<Link
-						href="#get-started"
-						className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+						href="/signup"
+						className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 hover:text-black"
 					>
 						Get Started
 					</Link>
@@ -101,7 +104,7 @@ export default function Navbar() {
 						Dashboard
 					</Link>
 					<Link
-						href="#transactions"
+						href="/dashboard/transactions"
 						onClick={handleNav}
 						className="block py-2 hover:text-indigo-600"
 					>
@@ -129,16 +132,16 @@ export default function Navbar() {
 						Business Registration
 					</Link>
 					<Link
-						href="#login"
+						href="/login"
 						onClick={handleNav}
 						className="block py-2 hover:text-indigo-600"
 					>
 						Log in
 					</Link>
 					<Link
-						href="#get-started"
+						href="/signup"
 						onClick={handleNav}
-						className="block py-2 bg-indigo-600 text-white rounded-lg text-center hover:bg-indigo-700"
+						className="block py-2 bg-indigo-600 text-white rounded-lg text-center hover:bg-gray-700"
 					>
 						Get Started
 					</Link>

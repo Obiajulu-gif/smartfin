@@ -1,10 +1,31 @@
-// pages/dashboard/page.js
+"use client"
+import { useEffect, useState } from "react";
 import Link from "next/link";
+<<<<<<< HEAD
 export default function DashboardPage({ session }) {
 	return (
 		<div className="container mx-auto p-8 ">
 			<h2 className="text-2xl font-bold text-gray-800 mb-2 text-center ">
 				{session?.user?.name}
+=======
+export default function DashboardPage() {
+	const [userName, setUserName] = useState("");
+
+	useEffect(() => {
+		// Retrieve user session from localStorage
+		const userSession = JSON.parse(localStorage.getItem("userName"));
+		if (userSession && userSession.displayName) {
+			setUserName(userSession.displayName);
+		} else {
+			setUserName("User"); // Default fallback if no name is found
+		}
+	}, []);
+
+	return (
+		<div className="container mx-auto p-8 ">
+			<h2 className="text-2xl font-bold text-gray-800 mb-2 text-center ">
+				Welcome, {userName}
+>>>>>>> 44ed9b5 (authentication aand dashboard options done)
 			</h2>
 			<p className="text-gray-600 mb-8 text-center">
 				What would you like to do with SmartFin today?

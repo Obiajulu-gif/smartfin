@@ -72,7 +72,7 @@ const Sidebar = () => {
 							<span>Transactions</span>
 						</Link>
 						<Link
-							href="#expenses"
+							href="/dashboard/expenses"
 							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
@@ -80,7 +80,7 @@ const Sidebar = () => {
 							<span>Expenses</span>
 						</Link>
 						<Link
-							href="#contacts"
+							href="/dashboard/contacts"
 							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
@@ -88,7 +88,7 @@ const Sidebar = () => {
 							<span>Contacts</span>
 						</Link>
 						<Link
-							href="#products"
+							href="/dashboard/products"
 							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
@@ -96,7 +96,7 @@ const Sidebar = () => {
 							<span>Products & Services</span>
 						</Link>
 						<Link
-							href="#accounting"
+							href="/dashboard/accounting"
 							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
@@ -104,7 +104,7 @@ const Sidebar = () => {
 							<span>Accounting</span>
 						</Link>
 						<Link
-							href="/chat"
+							href="/dashboard/chat"
 							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
@@ -112,7 +112,7 @@ const Sidebar = () => {
 							<span>AI Insights</span>
 						</Link>
 						<Link
-							href="#pos"
+							href="/dashboard/pos"
 							className="text-white flex items-center space-x-2 p-2 rounded hover:bg-indigo-700 hover:text-white transition-colors duration-200"
 							onClick={handleLinkClick}
 						>
@@ -123,12 +123,18 @@ const Sidebar = () => {
 				</div>
 				{/* Bottom Icons */}
 				<div className="px-8 border-t border-gray-700 py-3 flex justify-between">
-					<FaBell className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
-					<Link href="/chat">
+					<Link href="/dashboard/notifications">
+						<FaBell className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
+					</Link>
+					<Link href="/dashboard/message">
 						<FaComments className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
 					</Link>
-					<FaCog className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
-					<FaFolder className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
+					<Link href="/dashboard/settings">
+						<FaCog className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
+					</Link>
+					<Link href="/dashboard/file-management">
+						<FaFolder className="text-white cursor-pointer hover:bg-indigo-700 hover:text-white" />
+					</Link>
 				</div>
 			</div>
 

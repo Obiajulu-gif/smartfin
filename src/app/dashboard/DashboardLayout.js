@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-
+import PrivateRoute from "../PrivateRoute"
 export const metadata = {
 	title: "Dashboard",
 	description:
@@ -11,15 +11,17 @@ export const metadata = {
 };
 export default function DashboardLayout({ children }) {
 	return (
-		<div className="flex min-h-screen">
-			{/* Sidebar */}
-			<Sidebar />
-			<div className="flex-1 bg-gray-100">
-				{/* Topbar */}
-				<Navbar />
-				{/* Main Content */}
-				<main className="p-6 space-y-6">{children}</main>
+		<PrivateRoute>
+			<div className="flex min-h-screen">
+				{/* Sidebar */}
+				<Sidebar />
+				<div className="flex-1 bg-gray-100">
+					{/* Topbar */}
+					<Navbar />
+					{/* Main Content */}
+					<main className="p-6 space-y-6">{children}</main>
+				</div>
 			</div>
-		</div>
+		</PrivateRoute>
 	);
 }
