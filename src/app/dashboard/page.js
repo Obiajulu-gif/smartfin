@@ -37,12 +37,8 @@ const MainDashboard = async () => {
 
 	return (
 		<>
-<<<<<<< HEAD
-			<DashboardPage session={session} />
-			<Logout />
-=======
+
 			<DashboardPage />
->>>>>>> 44ed9b5 (authentication aand dashboard options done)
 		</>
 	);
 };
