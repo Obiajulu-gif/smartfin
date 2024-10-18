@@ -1,10 +1,10 @@
 // pages/dashboard/page.js
 import Link from "next/link";
-export default function DashboardPage() {
+export default function DashboardPage({ session }) {
 	return (
 		<div className="container mx-auto p-8 ">
 			<h2 className="text-2xl font-bold text-gray-800 mb-2 text-center ">
-				Welcome, Emmanuel
+				{session?.user?.name}
 			</h2>
 			<p className="text-gray-600 mb-8 text-center">
 				What would you like to do with SmartFin today?

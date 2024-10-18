@@ -1,13 +1,7 @@
 import NextAuth from "next-auth";
 import authOptions from "../../../auth";
 
-// Export the NextAuth handlers
-export const GET = async (req, res) => {
-	console.log("GET request received at /api/auth/[...nextauth]");
-	return NextAuth(authOptions)(req, res);
-};
+// You don't need custom GET and POST handlers; NextAuth handles both.
+const handler = NextAuth(authOptions);
 
-export const POST = async (req, res) => {
-	console.log("POST request received at /api/auth/[...nextauth]");
-	return NextAuth(authOptions)(req, res);
-};
+export { handler as GET, handler as POST };

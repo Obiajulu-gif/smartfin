@@ -13,7 +13,7 @@ const MainDashboard = async () => {
     if (!session?.user){ redirect('/login');}
 	return (
 		<>
-			<DashboardPage />
+			<DashboardPage session={session} />
 			<Logout />
 		</>
 	);

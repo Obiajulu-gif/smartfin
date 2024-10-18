@@ -8,7 +8,8 @@ import { signIn } from "next-auth/react";
 
 const prisma = new PrismaClient();
 
-const authOptions = ({
+const authOptions = {
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt',
     },
@@ -54,6 +55,7 @@ const authOptions = ({
     pages: {
         error: '/auth/error', // Custom error page
     },
-});
+};
 
+//export default NextAuth(authOptions);
 export default authOptions;
