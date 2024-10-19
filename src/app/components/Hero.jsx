@@ -37,7 +37,7 @@ export default function Hero() {
 					No more record books, no more errors, just time saved.
 				</p>
 				<div className="flex space-x-4">
-					<Link href="/signup">
+					<Link href="/signup" passHref>
 						<button className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 animate-bounce">
 							Get Started
 						</button>

@@ -66,8 +66,8 @@ export default function EmailForm({ onContinue }) {
 	};
 
 	return (
-		<div className="signup-container p-6 min-h-screen flex items-center justify-center bg-gray-50">
-			<div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+		<div className="signup-container p-2 min-h-screen flex items-center justify-center">
+			<div className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full">
 				<h1 className="text-3xl font-bold mb-4 text-center text-indigo-800">
 					Sign Up
 				</h1>
@@ -93,7 +93,7 @@ export default function EmailForm({ onContinue }) {
 					<button
 						type="submit"
 						disabled={loading}
-						className={`w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-800 transition duration-300 transform hover:scale-105 ${
+						className={`w-full bg-indigo-600 text-white flex items-center justify-center py-3 rounded-lg hover:bg-indigo-800 transition duration-300 transform hover:scale-105 ${
 							loading ? "cursor-not-allowed opacity-70" : ""
 						}`}
 					>
@@ -121,31 +121,28 @@ export default function EmailForm({ onContinue }) {
 				{error && <p className="text-red-500 mt-4 text-center">{error}</p>}
 
 				{/* Terms and Conditions */}
-					<p className="text-xs text-gray-500 text-center mt-4">
-						By continuing, you agree to our{" "}
-						<Link href="#" className="text-orange-500 hover:underline">
-							terms and conditions
-						</Link>{" "}
-						and{" "}
-						<Link
-							href="#"
-							className="text-orange-500 hover:underline"
-						>
-							privacy policy
-						</Link>
-						.
-					</p>
+				<p className="text-xs text-gray-500 text-center mt-4">
+					By continuing, you agree to our{" "}
+					<Link href="#" className="text-orange-500 hover:underline">
+						terms and conditions
+					</Link>{" "}
+					and{" "}
+					<Link href="#" className="text-orange-500 hover:underline">
+						privacy policy
+					</Link>
+					.
+				</p>
 
-					{/* Sign Up Link */}
-					<p className="text-center mt-4 text-gray-600">
-						Do have an account with us?{" "}
-						<Link
-							href="/Login"
-							className="text-orange-500 font-semibold hover:underline"
-						>
-							Login
-						</Link>
-					</p>
+				{/* Sign Up Link */}
+				<p className="text-center mt-4 text-gray-600">
+					Do have an account with us?{" "}
+					<Link
+						href="/login"
+						className="text-orange-500 font-semibold hover:underline"
+					>
+						Login
+					</Link>
+				</p>
 			</div>
 		</div>
 	);

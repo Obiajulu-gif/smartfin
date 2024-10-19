@@ -15,54 +15,56 @@ export default function AccountingPage() {
 	};
 
 	return (
-		<div className="container mx-auto p-8">
+		<div className="container mx-auto p-4">
 			<h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
 				Accounting Dashboard
 			</h1>
 
 			{/* Report Navigation */}
-			<div className="flex justify-center space-x-4 mb-8">
+			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
 				<button
-					className={`flex items-center p-4 rounded-lg shadow-md transition-transform hover:scale-105 ${
-						reportType === "income" ? "bg-indigo-600 text-white" : "bg-gray-100"
+					className={`flex items-center justify-center p-4 rounded-lg shadow-md transition-transform hover:scale-105 text-sm md:text-base ${
+						reportType === "income"
+							? "bg-indigo-600 text-white"
+							: "bg-gray-100 text-gray-800"
 					}`}
 					onClick={() => handleReportChange("income")}
 				>
 					<FaFileInvoiceDollar className="mr-2" />
-					Income Statement
+					<span>Income Statement</span>
 				</button>
 				<button
-					className={`flex items-center p-4 rounded-lg shadow-md transition-transform hover:scale-105 ${
+					className={`flex items-center justify-center p-4 rounded-lg shadow-md transition-transform hover:scale-105 text-sm md:text-base ${
 						reportType === "balance"
 							? "bg-indigo-600 text-white"
-							: "bg-gray-100"
+							: "bg-gray-100 text-gray-800"
 					}`}
 					onClick={() => handleReportChange("balance")}
 				>
 					<FaChartPie className="mr-2" />
-					Balance Sheet
+					<span>Balance Sheet</span>
 				</button>
 				<button
-					className={`flex items-center p-4 rounded-lg shadow-md transition-transform hover:scale-105 ${
+					className={`flex items-center justify-center p-4 rounded-lg shadow-md transition-transform hover:scale-105 text-sm md:text-base ${
 						reportType === "cashflow"
 							? "bg-indigo-600 text-white"
-							: "bg-gray-100"
+							: "bg-gray-100 text-gray-800"
 					}`}
 					onClick={() => handleReportChange("cashflow")}
 				>
 					<FaMoneyBillWave className="mr-2" />
-					Cash Flow
+					<span>Cash Flow</span>
 				</button>
 				<button
-					className={`flex items-center p-4 rounded-lg shadow-md transition-transform hover:scale-105 ${
+					className={`flex items-center justify-center p-4 rounded-lg shadow-md transition-transform hover:scale-105 text-sm md:text-base ${
 						reportType === "summary"
 							? "bg-indigo-600 text-white"
-							: "bg-gray-100"
+							: "bg-gray-100 text-gray-800"
 					}`}
 					onClick={() => handleReportChange("summary")}
 				>
 					<FaFileAlt className="mr-2" />
-					Summary Report
+					<span>Summary Report</span>
 				</button>
 			</div>
 
