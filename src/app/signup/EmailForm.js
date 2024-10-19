@@ -6,7 +6,7 @@ import {
 } from "../../lib/firebaseAuth"; // Import the actual signup function here
 import { useRouter } from "next/navigation";
 import { FaGoogle, FaSpinner } from "react-icons/fa"; // For UI enhancement
-
+import Link from "next/link"
 export default function EmailForm({ onContinue }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -119,6 +119,33 @@ export default function EmailForm({ onContinue }) {
 
 				{/* Error Message */}
 				{error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+
+				{/* Terms and Conditions */}
+					<p className="text-xs text-gray-500 text-center mt-4">
+						By continuing, you agree to our{" "}
+						<Link href="#" className="text-orange-500 hover:underline">
+							terms and conditions
+						</Link>{" "}
+						and{" "}
+						<Link
+							href="#"
+							className="text-orange-500 hover:underline"
+						>
+							privacy policy
+						</Link>
+						.
+					</p>
+
+					{/* Sign Up Link */}
+					<p className="text-center mt-4 text-gray-600">
+						Do have an account with us?{" "}
+						<Link
+							href="/Login"
+							className="text-orange-500 font-semibold hover:underline"
+						>
+							Login
+						</Link>
+					</p>
 			</div>
 		</div>
 	);

@@ -152,12 +152,12 @@ export default function Login() {
 					{/* Terms and Conditions */}
 					<p className="text-xs text-gray-500 text-center mt-4">
 						By continuing, you agree to our{" "}
-						<Link href="/terms" className="text-orange-500 hover:underline">
+						<Link href="#" className="text-orange-500 hover:underline">
 							terms and conditions
 						</Link>{" "}
 						and{" "}
 						<Link
-							href="/privacy-policy"
+							href="#"
 							className="text-orange-500 hover:underline"
 						>
 							privacy policy

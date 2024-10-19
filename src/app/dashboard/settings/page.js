@@ -78,7 +78,7 @@ const SettingsPage = () => {
 							type="submit"
 							className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-transform transform hover:scale-105"
 						>
-							<FaSave className="mr-2" /> Save Profile
+							<FaSave className="flex items-center" /> Save Profile
 						</button>
 					</form>
 				</div>
