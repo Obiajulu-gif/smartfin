@@ -13,7 +13,7 @@ const FIREBASE_AUTH_URL = `https://identitytoolkit.googleapis.com/v1/accounts:`;
 // Firebase configuration (replace with your actual config)
 const firebaseConfig = {
 	apiKey: "AIzaSyC7m7PjgmD2tG1oQqwp1k5KiN6O5Tc7_xk",
-	authDomain: "smartfin-6fc20.firebaseapp.com",
+	authDomain: "https://smartfin-two.vercel.app/",
 	projectId: "smartfin-6fc20",
 	storageBucket: "smartfin-6fc20",
 	messagingSenderId: "39053208728",
