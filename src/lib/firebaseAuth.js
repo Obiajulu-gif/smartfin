@@ -110,6 +110,13 @@ export const signinWithEmailPassword = async (email, password) => {
 			password
 		);
 		const user = userCredential.user;
+
+		// Retrieve idToken after login
+		//const idToken = await user.getIdToken();
+
+		// Store the idToken in localStorage
+		//storeSession(idToken, user.refreshToken, user.uid);
+
 		getUserNameForEmail(email, password);
 		return user;
 	} catch (error) {
@@ -124,6 +131,14 @@ export const signupWithGoogle = async () => {
 		const credential = GoogleAuthProvider.credentialFromResult(result);
 		const token = credential.accessToken;
 		const user = result.user;
+
+		// Retrieve idToken after login
+		//const idToken = await user.getIdToken();
+
+		// Store the idToken in localStorage
+		//storeSession(idToken, user.refreshToken, user.uid);
+
+
 		getUserNameForGoogleEmail(result)
 		return { user, token };
 	} catch (error) {
@@ -177,3 +192,5 @@ export const getSessionWithExpiry = (key) => {
 	}
 	return parsedData.value;
 };
+
+export { auth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup };

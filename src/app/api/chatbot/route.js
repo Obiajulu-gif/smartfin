@@ -18,7 +18,7 @@ export async function POST(req) {
       max_tokens: 80,
       temperature: 0.7,
     });
-
+    
     return NextResponse.json({ reply: response.choices[0].message.content });
   } catch (error) {
     console.error("Error with OpenAI API:", error);
