@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { auth } from "../../../lib/firebaseauth"; // Adjust the import path as needed
+import { auth } from "../../../lib/firebaseAuth"; // Adjust the import path as needed
 
 // React functional component
 const AddTransactionForm = () => {

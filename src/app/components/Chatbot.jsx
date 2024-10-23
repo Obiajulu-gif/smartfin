@@ -39,7 +39,7 @@ export default function Chatbot() {
 	};
 
 	return (
-		<div className="flex flex-col items-center p-6 space-y-4 bg-white shadow-lg rounded-lg max-w-full mx-auto my-10">
+		<div className="flex flex-col items-center p-6 space-y-4 bg-white shadow-lg rounded-lg max-w-md mx-auto my-10">
 			<h2 className="text-xl font-bold text-indigo-600">AI Chatbot</h2>
 
 			<div className="flex flex-col space-y-2 w-full bg-gray-100 p-4 rounded-lg overflow-y-auto h-64">

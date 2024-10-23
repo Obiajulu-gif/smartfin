@@ -1,5 +1,5 @@
 import React from 'react';
-import AddTransactionForm from '../../transact'; // Path to the component
+import AddTransactionForm from '../dashboard/transact'; // Path to the component
 
 function App() {
   return (
