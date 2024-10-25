@@ -16,9 +16,9 @@ const AddTransactionForm = () => {
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Transaction data to be added
+    const userId = localStorage.getItem("localId"); // Fetch userId from localStorage
     const newTransaction = {
+      userId,
       amount: parseFloat(amount), // Convert amount to number
       category,
       description,
@@ -59,6 +59,8 @@ const AddTransactionForm = () => {
         alert("User is not authenticated. Please log in to continue.");
         return;
       }
+
+      console.log("Transaction data being sent:", transactionData); // Log data here
 
       // Send the POST request to the backend API with idToken in the Authorization header
       const response = await fetch('/api/addtransaction', {

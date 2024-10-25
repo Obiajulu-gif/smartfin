@@ -115,10 +115,10 @@ export const signinWithEmailPassword = async (email, password) => {
 		const user = userCredential.user;
 
 		// Retrieve idToken after login
-		//const idToken = await user.getIdToken();
+		const idToken = await user.getIdToken();
 
 		// Store the idToken in localStorage
-		//storeSession(idToken, user.refreshToken, user.uid);
+		storeSession(idToken, user.refreshToken, user.uid);
 
 		getUserNameForEmail(email, password);
 		return user;
@@ -136,10 +136,10 @@ export const signupWithGoogle = async () => {
 		const user = result.user;
 
 		// Retrieve idToken after login
-		//const idToken = await user.getIdToken();
+		const idToken = await user.getIdToken();
 
 		// Store the idToken in localStorage
-		//storeSession(idToken, user.refreshToken, user.uid);
+		storeSession(idToken, user.refreshToken, user.uid);
 
 
 		getUserNameForGoogleEmail(result)
