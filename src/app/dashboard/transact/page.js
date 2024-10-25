@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { auth } from "../../../lib/firebaseAuth"; // Adjust the import path as needed
+//import { auth } from "../../../lib/firebaseAuth"; // Adjust the import path as needed
 
 // React functional component
 const AddTransactionForm = () => {
@@ -45,20 +45,20 @@ const AddTransactionForm = () => {
     try {
 
       // Retrieve the idToken from Firebase authentication
-      const user = auth.currentUser;
-      if (!user) {
+      //const user = auth.currentUser;
+      //if (!user) {
+        //alert("User is not authenticated. Please log in to continue.");
+        //return;
+      //}
+      //const idToken = await user.getIdToken();
+
+      //Retrieve the idToken from localStorage
+      const idToken = localStorage.getItem("idToken");
+
+      if (!idToken) {
         alert("User is not authenticated. Please log in to continue.");
         return;
       }
-      const idToken = await user.getIdToken();
-
-      // Retrieve the idToken from localStorage
-      //const idToken = localStorage.getItem("idToken");
-
-      //if (!idToken) {
-        //alert("User is not authenticated. Please log in to continue.");
-        //return;
-     // }
 
       // Send the POST request to the backend API with idToken in the Authorization header
       const response = await fetch('/api/addtransaction', {

@@ -3,19 +3,14 @@ import { getAuth } from 'firebase-admin/auth'; // Firebase Admin SDK to verify i
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { amount, category, description, date } = req.body;
-    const idToken = req.headers.authorization?.split('Bearer ')[1]; // Get idToken from Authorization header
+    const { userId, amount, category, description, date } = req.body;
 
-    if (!idToken) {
-      return res.status(401).json({ error: 'Unauthorized: No token provided' });
+    if (!userId || !amount || !category || !description || !date) {
+      return res.status(400).json({ error: 'Missing required fields' });
     }
 
     try {
-      // Verify the token using Firebase Admin SDK
-      const decodedToken = await getAuth().verifyIdToken(idToken);
-      const userId = decodedToken.uid; // This is the user ID
-
-      // Now create the transaction
+      // Create a new transaction in the database using Prisma
       const transaction = await prisma.transaction.create({
         data: {
           userId,
@@ -26,12 +21,14 @@ export default async function handler(req, res) {
         },
       });
 
+      // Return the newly created transaction
       res.status(200).json(transaction);
     } catch (error) {
       console.error('Error adding transaction:', error);
       res.status(500).json({ error: 'Failed to add transaction' });
     }
   } else {
+    // Method not allowed
     res.status(405).json({ error: 'Method not allowed' });
   }
 }

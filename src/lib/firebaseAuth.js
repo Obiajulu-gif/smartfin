@@ -1,4 +1,5 @@
 import axios from "axios";
+//import admin from 'firebase-admin';
 import { initializeApp } from "firebase/app";
 import {
 	getAuth,
@@ -19,6 +20,8 @@ const firebaseConfig = {
 	messagingSenderId: "39053208728",
 	appId: "1:39053208728:web:28297ef91dc306e6acb4ed",
 };
+
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
