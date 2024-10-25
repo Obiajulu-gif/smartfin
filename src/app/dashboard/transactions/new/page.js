@@ -1,152 +1,159 @@
 "use client";
 import { useState } from "react";
-import {
-	FaArrowCircleDown,
-	FaArrowCircleUp,
-	FaDollarSign,
-	FaCalendarAlt,
-	FaFileInvoiceDollar,
-	FaUserTie,
-} from "react-icons/fa";
+import { FaPlus, FaTrashAlt, FaEdit } from "react-icons/fa";
 
-const TransactionForm = () => {
-	const [transactionType, setTransactionType] = useState("in");
+const AddTransactionForm = () => {
+  const [transactions, setTransactions] = useState([]);
+  const [form, setForm] = useState({ amount: "", category: "income", description: "", date: "" });
+  const [editingIndex, setEditingIndex] = useState(null);
 
-	// Handler to toggle between Money In and Money Out
-	const handleToggle = (type) => {
-		setTransactionType(type);
-	};
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-	return (
-		<div className="p-6 bg-white shadow-md rounded-lg max-w-2xl mx-auto text-blue-300">
-			<div className="flex space-x-4 mb-6">
-				{/* Toggle Buttons */}
-				<button
-					onClick={() => handleToggle("in")}
-					className={`flex items-center px-4 py-2 ${
-						transactionType === "in"
-							? "bg-indigo-600 text-white"
-							: "bg-gray-200 text-gray-600"
-					} rounded-md`}
-				>
-					<FaArrowCircleUp className="mr-2" /> Money In
-				</button>
-				<button
-					onClick={() => handleToggle("out")}
-					className={`flex items-center px-4 py-2 ${
-						transactionType === "out"
-							? "bg-indigo-600 text-white"
-							: "bg-gray-200 text-gray-600"
-					} rounded-md`}
-				>
-					<FaArrowCircleDown className="mr-2" /> Money Out
-				</button>
-			</div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const userId = localStorage.getItem("localId"); // Fetch userId from localStorage
+    const newTransaction = { userId, ...form, amount: parseFloat(form.amount) };
 
-			<div className="text-indigo-800">
-				{/* Money In Form */}
-				{transactionType === "in" && (
-					<form className="space-y-4">
-						<h3 className="text-lg font-semibold mb-4">
-							Transaction ID: 123456
-						</h3>
-						<div>
-							<label className="block mb-2">Choose Transaction Type</label>
-							<select className="w-full p-2 border rounded">
-								<option>Sales</option>
-								<option>Other</option>
-							</select>
-						</div>
-						<div>
-							<label className="block mb-2 flex items-center">
-								<FaFileInvoiceDollar className="mr-2" /> Product/Service Name
-							</label>
-							<input
-								type="text"
-								placeholder="Input Product/Service name"
-								className="w-full p-2 border rounded"
-							/>
-						</div>
-						<div>
-							<label className="block mb-2 flex items-center">
-								<FaDollarSign className="mr-2" /> Selling Price
-							</label>
-							<input
-								type="number"
-								placeholder="0.00"
-								className="w-full p-2 border rounded"
-							/>
-						</div>
-						<div>
-							<label className="block mb-2 flex items-center">
-								<FaFileInvoiceDollar className="mr-2" /> Quantity
-							</label>
-							<input
-								type="number"
-								placeholder="1"
-								className="w-full p-2 border rounded"
-							/>
-						</div>
-						<button className="w-full mt-4 py-2 bg-blue-600 text-white rounded">
-							Create Transaction
-						</button>
-					</form>
-				)}
+    if (editingIndex !== null) {
+      const updatedTransactions = [...transactions];
+      updatedTransactions[editingIndex] = newTransaction;
+      setTransactions(updatedTransactions);
+      setEditingIndex(null);
+    } else {
+      const result = await addTransaction(newTransaction);
+      if (result) {
+        setTransactions([...transactions, newTransaction]);
+      }
+    }
 
-				{/* Money Out Form */}
-				{transactionType === "out" && (
-					<form className="space-y-4">
-						<h3 className="text-lg font-semibold mb-4">
-							Transaction ID: 123456
-						</h3>
-						<div>
-							<label className="block mb-2">Choose Expense Type</label>
-							<select className="w-full p-2 border rounded">
-								<option>Expenses</option>
-								<option>Other</option>
-							</select>
-						</div>
-						<div>
-							<label className="block mb-2 flex items-center">
-								<FaUserTie className="mr-2" /> Vendor Name
-							</label>
-							<input
-								type="text"
-								placeholder="Enter vendor name"
-								className="w-full p-2 border rounded"
-							/>
-						</div>
-						<div>
-							<label className="block mb-2">Description</label>
-							<textarea
-								placeholder="Enter description"
-								className="w-full p-2 border rounded"
-							></textarea>
-						</div>
-						<div>
-							<label className="block mb-2 flex items-center">
-								<FaDollarSign className="mr-2" /> Amount
-							</label>
-							<input
-								type="number"
-								placeholder="0.00"
-								className="w-full p-2 border rounded"
-							/>
-						</div>
-						<div>
-							<label className="block mb-2 flex items-center">
-								<FaCalendarAlt className="mr-2" /> Date
-							</label>
-							<input type="date" className="w-full p-2 border rounded" />
-						</div>
-						<button className="w-full mt-4 py-2 bg-blue-600 text-white rounded">
-							Create Transaction
-						</button>
-					</form>
-				)}
-			</div>
-		</div>
-	);
+    setForm({ amount: "", category: "income", description: "", date: "" });
+  };
+
+  const handleDelete = (index) => {
+    const updatedTransactions = transactions.filter((_, i) => i !== index);
+    setTransactions(updatedTransactions);
+  };
+
+  const handleEdit = (index) => {
+    setForm(transactions[index]);
+    setEditingIndex(index);
+  };
+
+  const addTransaction = async (transactionData) => {
+    try {
+      const idToken = localStorage.getItem("idToken");
+      if (!idToken) {
+        alert("User is not authenticated. Please log in to continue.");
+        return;
+      }
+
+      const response = await fetch('/api/addtransaction', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`,
+        },
+        body: JSON.stringify(transactionData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("Error adding transaction:", error.message);
+      alert(`Failed to add transaction: ${error.message}`);
+    }
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Manage Transactions</h1>
+
+      <div className="bg-white p-6 rounded-lg shadow-md max-w-xl mx-auto">
+        <h2 className="text-2xl font-bold mb-4">{editingIndex !== null ? "Edit Transaction" : "Add Transaction"}</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="number"
+            name="amount"
+            placeholder="Amount"
+            value={form.amount}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            required
+          />
+          <select
+            name="category"
+            value={form.category}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            required
+          >
+            <option value="income">Income</option>
+            <option value="expenses">Expenses</option>
+          </select>
+          <input
+            type="text"
+            name="description"
+            placeholder="Description"
+            value={form.description}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            required
+          />
+          <input
+            type="date"
+            name="date"
+            placeholder="Date"
+            value={form.date}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            required
+          />
+          <button type="submit" className="w-full bg-indigo-500 text-white py-3 rounded-lg flex items-center justify-center hover:bg-indigo-600 transition-colors">
+            {editingIndex !== null ? (
+              <FaEdit className="mr-2" />
+            ) : (
+              <FaPlus className="mr-2" />
+            )}
+            {editingIndex !== null ? "Update Transaction" : "Add Transaction"}
+          </button>
+        </form>
+      </div>
+
+      <div className="mt-8 max-w-4xl mx-auto">
+        <h2 className="text-xl font-bold mb-4">Transaction List</h2>
+        {transactions.length === 0 ? (
+          <p className="text-gray-500 text-center">No transactions added yet.</p>
+        ) : (
+          <ul className="space-y-4">
+            {transactions.map((transaction, index) => (
+              <li key={index} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-bold">{transaction.description}</h3>
+                  <p className="text-sm text-gray-600">{transaction.category}</p>
+                  <p className="text-sm text-gray-600">${transaction.amount}</p>
+                  <p className="text-sm text-gray-600">{transaction.date}</p>
+                </div>
+                <div className="flex space-x-4">
+                  <button onClick={() => handleEdit(index)} className="bg-yellow-400 text-white p-2 rounded-lg hover:bg-yellow-500">
+                    <FaEdit />
+                  </button>
+                  <button onClick={() => handleDelete(index)} className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">
+                    <FaTrashAlt />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
 };
 
-export default TransactionForm;
+export default AddTransactionForm;
