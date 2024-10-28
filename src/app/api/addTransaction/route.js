@@ -1,4 +1,5 @@
 import prisma from '../../../lib/prisma';
+import { getAuth } from 'firebase-admin/auth'; // Firebase Admin SDK to verify idToken
 
 export async function POST(req) {
   try {
