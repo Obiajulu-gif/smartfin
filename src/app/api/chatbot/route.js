@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
+import dotenv from "dotenv";
+
+// Configure dotenv to load environment variables
+dotenv.config();
 
 const openai = new OpenAI({
 	apiKey: process.env.OPENAI_API_KEY,
