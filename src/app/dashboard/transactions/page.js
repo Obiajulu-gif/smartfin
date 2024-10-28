@@ -2,17 +2,56 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MdNoAccounts } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Transactions = () => {
-  // State for transactions and search and filter
   const [transactions, setTransactions] = useState([]);
-  const [search, setSearch] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    // Fetch transactions from localStorage or an API endpoint
-    const savedTransactions = JSON.parse(localStorage.getItem("transactions")) || [];
-    setTransactions(savedTransactions);
+    const fetchTransactions = async () => {
+      const userId = localStorage.getItem("localId");
+      if (!userId) {
+        alert("User not authenticated. Please log in to continue.");
+        return;
+      }
+
+      const response = await fetch(`/api/gettransactions?userId=${userId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      setTransactions(result);
+    };
+
+    fetchTransactions();
   }, []);
+
+  const handleDelete = async (transactionId) => {
+    const response = await fetch(`/api/deletetransaction`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('localId')}`,
+      },
+      body: JSON.stringify({ id: transactionId, userId: localStorage.getItem('localId') }),
+    });
+
+    if (response.ok) {
+      const updatedTransactions = transactions.filter(transaction => transaction.id !== transactionId);
+      setTransactions(updatedTransactions);
+      setMessage("Transaction deleted successfully!");
+      setTimeout(() => setMessage(""), 3000); // Clear message after 3 seconds
+    } else {
+      console.error("Failed to delete transaction.");
+    }
+  };
 
   const calculateSummary = () => {
     let totalIncome = 0;
@@ -34,8 +73,11 @@ const Transactions = () => {
 
   return (
     <div className="p-6 bg-white">
-      {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Transaction Summary</h1>
+      
+      {message && <p className="text-green-500 text-center mb-4">{message}</p>}
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="p-4 border rounded-lg shadow-sm text-center bg-gray-50">
           <h3 className="text-sm font-semibold text-gray-600">Total Income</h3>
           <p className="text-lg font-bold text-gray-900">₦{totalIncome.toFixed(2)}</p>
@@ -50,25 +92,34 @@ const Transactions = () => {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <input
-          type="text"
-          placeholder="Search transactions..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="p-2 border rounded"
-        />
+      <div className="mt-8 max-w-4xl mx-auto">
+        <h2 className="text-xl font-bold mb-4">Transaction List</h2>
+        {transactions.length === 0 ? (
+          <p className="text-gray-500 text-center">No transactions found.</p>
+        ) : (
+          <ul className="space-y-4">
+            {transactions.map((transaction, index) => (
+              <li key={index} className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-bold">{transaction.description}</h3>
+                  <p className="text-sm text-gray-600">{transaction.category}</p>
+                  <p className="text-sm text-gray-600">₦{transaction.amount}</p>
+                  <p className="text-sm text-gray-600">{transaction.date}</p>
+                </div>
+                <button onClick={() => handleDelete(transaction.id)} className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">
+                  <FaTrashAlt />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      {/* No Transaction Message */}
-      <div className="flex flex-col items-center justify-center text-center p-4 border rounded-lg bg-gray-50">
-        <MdNoAccounts className="mb-4 w-24 h-24 text-gray-500" />
-        <p className="text-gray-500">No transaction recorded</p>
-        <Link href="/dashboard/transactions/new">
-          <button className="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-400 text-white rounded-lg">+ Add transaction</button>
-        </Link>
-      </div>
+      <Link href="/dashboard/transactions/new">
+        <button className="mt-8 px-4 py-2 bg-indigo-600 hover:bg-indigo-400 text-white rounded-lg flex items-center justify-center">
+          Add New Transaction
+        </button>
+      </Link>
     </div>
   );
 };
