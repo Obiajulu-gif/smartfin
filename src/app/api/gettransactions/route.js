@@ -2,8 +2,7 @@ import prisma from '../../../lib/prisma';
 
 export async function GET(req) {
   try {
-    const url = new URL(req.url);
-    const userId = url.searchParams.get('userId');
+    const userId = req.nextUrl.searchParams.get('userId');
 
     if (!userId) {
       return new Response(JSON.stringify({ error: 'User not authenticated' }), { status: 401 });
