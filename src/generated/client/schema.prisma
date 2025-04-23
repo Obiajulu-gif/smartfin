@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Transaction {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String // User ID from your authentication system
+  amount      Float
+  category    String // Category of transaction
+  description String
+  date        DateTime @default(now())
+
+  @@index([userId]) // Index for faster user-specific queries
+  @@index([date]) // Index for date-based filtering and sorting
+  @@index([userId, date]) // Compound index for user's transactions by date
+  @@index([userId, category]) // Compound index for user's transactions by category
+  // Optimized indexes for MongoDB
+  @@index([userId, date, category]) // Compound index for filtering by all common fields
+  @@index([date, amount]) // Index for date-based aggregations and reports
+  @@index([category, amount]) // Index for category-based financial analysis
+}
+
+model UserActivity {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String // User ID from Firebase authentication
+  activityType String // Type of activity: login, signup, logout, etc.
+  deviceInfo   String? // Device information
+  ipAddress    String? // IP address
+  userAgent    String? // Browser/device user agent
+  timestamp    DateTime @default(now())
+  details      Json? // Additional details about the activity
+
+  // Optimized indexes for MongoDB
+  @@index([userId, timestamp]) // Compound index for user activity history
+  @@index([activityType, timestamp]) // Index for activity type analysis
+  @@index([timestamp]) // Index for chronological queries
+}

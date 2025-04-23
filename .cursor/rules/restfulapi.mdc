@@ -1,0 +1,296 @@
+---
+description: SmartFin-AI is a financial assistant that integrates with MongoDB to gather comprehensive user data, including profiles, transactions, expenses, contacts, and financial products. Utilizing LangChain.js and Google Generative AI (Gemini), it processes this data to provide personalized financial advice. User queries are sent to the RESTful API endpoint at https://smartfin-ai-api.onrender.com/api/v1/conversation/{user_id}, where the system responds with context-aware financial guidance.
+globs: 
+alwaysApply: true
+---
+Here’s a step‑by‑step guide in Markdown showing how to pull **all** user data from MongoDB in your Node.js backend and POST it straight to your SmartFin‑AI REST endpoint (`/api/v1/conversation/{user_id}`) at `https://smartfin-ai-api.onrender.com/`.  
+
+---
+
+## 📋 Summary  
+You’ll connect to MongoDB, query every relevant collection by `user_id` (profile, transactions, expenses, contacts, products/services), assemble them into a single payload, then use the Fetch API to send that JSON payload to your SmartFin‑AI endpoint.  
+
+---
+
+## 1. Fetching User Data from MongoDB  
+
+```js
+// dbClient.js
+import { MongoClient, ObjectId } from 'mongodb';
+
+const client = new MongoClient(process.env.MONGODB_URI);
+await client.connect();
+const db = client.db('smartfin');
+
+export default db;
+```
+
+```js
+// services/userDataService.js
+import db from './dbClient.js';
+
+export async function getUserFullContext(userId) {
+  const _id = new ObjectId(userId);
+
+  // 1) Basic profile
+  const profile = await db.collection('users').findOne({ _id })  // citeturn0search9
+
+  // 2) Transactions
+  const transactions = await db
+    .collection('transactions')
+    .find({ user_id: _id })
+    .toArray();                                            // citeturn0search1
+
+  // 3) Expenses summary
+  const expenses_summary = await db
+    .collection('expenses_summary')
+    .findOne({ user_id: _id });                           // citeturn0search9
+
+  // 4) Contacts
+  const contacts = await db
+    .collection('contacts')
+    .find({ user_id: _id })
+    .toArray();                                            // citeturn0search1
+
+  // 5) Products & services
+  const products_services = await db
+    .collection('products_services')
+    .find({ user_id: _id })
+    .toArray();                                            // citeturn0search1
+
+  return { profile, transactions, expenses_summary, contacts, products_services };
+}
+```
+
+---
+
+## 2. Assembling & Sending the Payload  
+
+```js
+// services/aiClient.js
+import fetch from 'node-fetch';                           // If using Node <18
+const SMARTFIN_BASE = process.env.SMARTFIN_BASE;         // e.g. "https://smartfin-ai-api.onrender.com"
+
+export async function sendToSmartFin(userId, userMessage, context) {
+  const url = `${SMARTFIN_BASE}/api/v1/conversation/${userId}`;
+  const payload = {
+    user_id:  userId,
+    message:  userMessage,
+    context,                                          
+  };
+
+  const res = await fetch(url, {
+    method: 'POST',                                     // citeturn0search4
+    headers: { 'Content-Type': 'application/json' },    // citeturn0search0
+    body: JSON.stringify(payload),                      // citeturn0search4
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`SmartFin API error: ${res.status} ${text}`);
+  }
+
+  const { response } = await res.json();
+  return response;
+}
+```
+
+---
+
+## 3. Putting It All Together in Your Route  
+
+```js
+// pages/api/conversation/[user_id].js  (Next.js) 
+import { getUserFullContext } from '../../services/userDataService.js';
+import { sendToSmartFin }     from '../../services/aiClient.js';
+
+export default async function handler(req, res) {
+  const { user_id } = req.query;
+  const { message } = req.body;
+
+  try {
+    // 1) Gather all user data
+    const context = await getUserFullContext(user_id);
+
+    // 2) Forward to SmartFin‑AI
+    const aiReply = await sendToSmartFin(user_id, message, context);
+
+    // 3) Return LLM response
+    res.status(200).json({ response: aiReply });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+}
+```
+
+Here’s the updated guide with **all URLs & available endpoints**, plus a new **Chat Section** for your AI chatbot. We’ve also swapped out OpenAI for **Google Generative AI** everywhere.
+
+---
+
+## 🌐 API Base & Endpoints
+
+- **Base URL**  
+  `https://smartfin-ai-api.onrender.com/`
+
+- **Available Endpoints**  
+  | Method | Endpoint                                    | Description                                   |
+  | ------ | ------------------------------------------- | --------------------------------------------- |
+  | POST   | `/api/v1/conversation/{user_id}`            | Send user_id + message + full context → LLM   |
+  | GET    | `/api/v1/health`                            | (Optional) Health check for your SmartFin‑AI  |
+
+---
+
+## 📋 Summary  
+On each user login or chat message, your backend will:
+
+1. **Fetch** every piece of that user’s data from MongoDB (profile, transactions, expenses, contacts, products/services).  
+2. **Assemble** it into one JSON payload.  
+3. **POST** to `https://smartfin-ai-api.onrender.com/api/v1/conversation/{user_id}`.  
+4. **Receive** back `{ response: "<AI’s answer>" }` from your Gemini‑powered Google Generative AI.  
+
+---
+
+## 1. Fetching User Data from MongoDB  
+
+```js
+// dbClient.js
+import { MongoClient, ObjectId } from 'mongodb';
+const client = new MongoClient(process.env.MONGODB_URI);
+await client.connect();
+export default client.db('smartfin');
+```
+
+```js
+// services/userDataService.js
+import db from './dbClient.js';
+
+export async function getUserFullContext(userId) {
+  const _id = new ObjectId(userId);
+  const profile = await db.collection('users').findOne({ _id });
+  const transactions = await db.collection('transactions').find({ user_id: _id }).toArray();
+  const expenses_summary = await db.collection('expenses_summary').findOne({ user_id: _id });
+  const contacts = await db.collection('contacts').find({ user_id: _id }).toArray();
+  const products_services = await db.collection('products_services').find({ user_id: _id }).toArray();
+  return { profile, transactions, expenses_summary, contacts, products_services };
+}
+```
+
+---
+
+## 2. Assembling & Sending the Payload  
+
+```js
+// services/aiClient.js
+import fetch from 'node-fetch';  
+const SMARTFIN_BASE = process.env.SMARTFIN_BASE; // "https://smartfin-ai-api.onrender.com"
+
+export async function sendToSmartFin(userId, userMessage, context) {
+  const url = `${SMARTFIN_BASE}/api/v1/conversation/${userId}`;
+  const payload = { user_id: userId, message: userMessage, context };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`SmartFin API error: ${res.status} ${err}`);
+  }
+  return (await res.json()).response;
+}
+```
+
+---
+
+## 3. Next.js API Route  
+
+```js
+// pages/api/conversation/[user_id].js
+import { getUserFullContext } from '../../services/userDataService.js';
+import { sendToSmartFin }       from '../../services/aiClient.js';
+
+export default async function handler(req, res) {
+  const { user_id } = req.query;
+  const { message } = req.body;
+  try {
+    const context = await getUserFullContext(user_id);
+    const aiReply = await sendToSmartFin(user_id, message, context);
+    res.status(200).json({ response: aiReply });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+}
+```
+
+---
+
+## 4. Chat Section (React/JSX)  
+
+```jsx
+// components/SmartFinChat.jsx
+import React, { useState } from 'react';
+
+export default function SmartFinChat({ userId }) {
+  const [input, setInput] = useState('');
+  const [reply, setReply] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+    const res = await fetch(`/api/conversation/${userId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: input.trim() }),
+    });
+    const { response } = await res.json();
+    setReply(response);
+    setInput('');
+  };
+
+  return (
+    <div className="chat-widget">
+      <form onSubmit={handleSubmit}>
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          placeholder="Ask your financial assistant…"
+        />
+        <button type="submit">Send</button>
+      </form>
+      {reply && <div className="ai-reply">{reply}</div>}
+    </div>
+  );
+}
+```
+
+> **Note:** This component sends **only** `{ message }`—your backend enriches it with full context and calls Google Generative AI (Gemini) under the hood.
+
+---
+
+## ✅ Best Practices
+
+- **Env vars**:  
+  - `MONGODB_URI` → your MongoDB connection string  
+  - `SMARTFIN_BASE` → `https://smartfin-ai-api.onrender.com`  
+
+- **Security**:  
+  - HTTPS only  
+  - Validate user ownership of `user_id`  
+
+- **Privacy**:  
+  - Don’t log raw context or messages on the client  
+
+- **Error Handling**:  
+  - Graceful retries/back‑off on network errors  
+
+
+## ✅ Best Practices
+
+- **Env vars**: Keep `MONGODB_URI` and `SMARTFIN_BASE` in `.env.local` (never commit secrets).  
+- **Error handling**: Return clear errors upstream; consider retry/back‑off if needed.  
+- **Logging**: Log metadata (user_id, endpoint, status) but **never** log raw financial data.  
+- **Security**: Serve only over HTTPS; validate `user_id` ownership before data fetch.  
+
+With this in place, every login (or user query) will dynamically gather the user’s full financial profile from MongoDB and send it to your SmartFin‑AI endpoint—enabling the Gemini‑powered LLM to deliver pinpoint, context‑aware advice. 
