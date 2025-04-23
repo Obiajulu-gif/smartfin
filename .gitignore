@@ -12,6 +12,17 @@
 # next.js
 /.next/
 /out/
+/.next-build/
+/.next-build
+.next/
+.next
+next-build/
+next-build
+
+# Cache directories
+**/.cache
+**/*.pack
+**/*.pack.*
 
 # production
 /build
@@ -28,7 +39,9 @@ yarn-error.log*
 # local env files
 .env
 .env.local
-
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
@@ -36,3 +49,42 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# PWA files
+public/sw.js
+public/workbox-*.js
+public/worker-*.js
+public/sw.js.map
+public/workbox-*.js.map
+public/worker-*.js.map
+
+# IDE files
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+ui-debug.log
+
+# MongoDB
+/data
+/dump
+
+# Logs
+logs
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
