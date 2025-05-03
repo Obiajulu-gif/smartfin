@@ -1,162 +1,149 @@
-# 🌟 SmartFin - AI-Powered Financial Management🌟
+# 🌟 SmartFin - Hedera-Powered Financial Management via Telegram 🌟
 
-Welcome to **SmartFin**, your ultimate AI-powered financial management tool designed to streamline financial tracking and decision-making for businesses. With SmartFin, users can effortlessly track daily profits, expenses, and transactions. This app leverages artificial intelligence to provide personalized insights and includes a virtual assistant that helps businesses make informed financial decisions.
+**SmartFin** is a cutting-edge AI-driven financial management platform enhanced with **Hedera Hashgraph** and an interactive **Telegram bot**, empowering businesses to manage finances, send tokens, create airdrops, and reward customers seamlessly through chat.
+
+---
 
 ![Hero Page Image](image.png)
-## ✨ Features
 
-- 📊 **Comprehensive Financial Management:** Track income, expenses, and transactions in real-time.
-- 🤖 **AI-Driven Insights:** Receive personalized financial advice tailored to your business needs.
-- 📦 **Inventory Management:** Manage product inventory and services efficiently.
-- 📈 **Detailed Reports:** Generate easy-to-read reports on financial performance.
-- 🔒 **Secure Authentication:** Secure login and user management with NextAuth.
-- 💻 **Responsive UI:** Beautiful and intuitive user interface powered by Tailwind CSS.
-- 📊 **Data Visualization:** View financial data in engaging charts powered by Chart.js.
-## 🛠️ Tech Stack
+## 💸 Key Capabilities
 
-The project leverages the following technologies:
+### 1. Hedera-Powered Transactions
 
-- ⚛️ **Next.js:** A React framework for building server-rendered applications.
-- 🍃 **MongoDB:** A NoSQL database for storing and managing data.
-- 🎨 **Tailwind CSS:** A utility-first CSS framework for responsive and mobile-friendly design.
-- 🔐 **NextAuth:** A robust authentication library for Next.js applications.
-- 📊 **Chart.js:** A JavaScript library for data visualization and charts.
+* 🔁 **Instant HBAR Transfers:** Send HBAR tokens to any customer in your database directly from Telegram.
+* 🎁 **Automated Airdrops:** Schedule or trigger token distributions to user segments or your entire customer base.
+* 🎉 **Custom Gifting:** Create personalized token gifts to thank or incentivize individual customers.
+* ⚡ **Micro-fee Efficiency:** Leverage Hedera’s low transaction fees for cost-effective micropayments.
+
+### 2. AI-Driven Financial Insights
+
+* 📊 **Real-Time Tracking:** Monitor incomes, expenses, and transaction flows with live dashboards.
+* 🤖 **Smart Recommendations:** Receive AI-powered suggestions for budgeting, expense reduction, and growth strategies.
+* 📈 **Custom Reports:** Generate downloadable analytics and visualizations for stakeholders.
+
+### 3. Telegram Bot Integration
+
+Interact with **@Finnebulabot** on Telegram for a fully conversational financial experience:
+
+* 💬 **Chat Commands:** Intuitive commands to manage tokens, check balances, and review history.
+* 🔔 **Notifications:** Automated alerts for incoming payments, upcoming airdrops, and low balances.
+
+🔗 **Launch the bot:** [@Finnebulabot](https://web.telegram.org/k/#@Finnebulabot)
+
+🎥 **Watch Demo:** [SmartFin Hedera Bot in Action](https://drive.google.com/file/d/17QDPs2Vqb1I4J_QfHm2QycKxABLwNYIF/view?usp=sharing)
+
+---
+
+## 🛠️ Architecture Overview
+
+```plaintext
+[User via Telegram] <--> [Finnebulabot Service (NestJS)] <--> [SmartFin API (Next.js)]
+                                                |         |
+                                                |         --> [Hedera Hashgraph Network]
+                                                |         --> [MongoDB Database]
+                                                |
+                                                --> [AI Insights Engine (Node.js/Python)]
+```
+
+* **Finnebulabot Service:** Receives and processes Telegram commands, validates user sessions, and routes requests to SmartFin API.
+* **SmartFin API:** Core backend in Next.js handling business logic, AI integrations, and Hedera SDK interactions.
+* **Hedera Network:** Executes token operations—transfers, airdrops, token minting via Hedera Token Service.
+* **MongoDB:** Stores user profiles, transaction logs, bot settings, and AI-generated insights.
+
+---
+
+## 🔧 Tech Stack
+
+| Layer              | Technology                    |
+| ------------------ | ----------------------------- |
+| Frontend           | Next.js, React, Tailwind CSS  |
+| Backend API        | Next.js (API Routes), Node.js |
+| Database           | MongoDB                       |
+| Authentication     | Firebase                      |
+| AI Insights        | OpenAI API, Germini Model     |
+| Hedera Integration | Hedera JavaScript SDK         |
+| Bot Framework      | NestJS,granny                 |
+| Charts & Reports   | Chart.js                      |
+
+---
 
 ## 🚀 Getting Started
 
-### 📋 Prerequisites
-Make sure you have the following installed:
-- 🟢 **Node.js** (v14 or above)
-- 🔥 **Firebase**
-- 🍃 **MongoDB**
-### ⚙️ Installation
+### Prerequisites
 
-1. **Clone the repository:**
-    ```bash
-    git clone https://github.com/Ekenesamuel8/smartfin.git
-    cd smartfin
-    ```
+* **Node.js** v14 or above
+* **MongoDB** instance (local or Atlas)
+* **Hedera Account:** Operator ID & Private Key
+* **Telegram Bot:** Token from BotFather
 
+### Setup & Installation
+
+1. **Clone repository:**
+
+   ```bash
+   git clone https://github.com/Ekenesamuel8/smartfin.git
+   cd smartfin
+   ```
 2. **Install dependencies:**
-    ```bash
-    npm install
-    ```
 
-3. **Configure environment variables:**
-    Create a `.env` file in the root directory and add the necessary environment variables:
-    ```env
-    MONGODB_URI=<your_mongodb_connection_string>
-    NEXTAUTH_SECRET=<your_nextauth_secret>
-    OPENAI_API_KEY=<your_openai_api_key>
-    ```
+   ```bash
+   npm install
+   ```
+3. **Environment variables:** Create a `.env` file in the project root with:
 
-4. **Run the development server:**
-    ```bash
-    npm run dev
-    ```
-    Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
-## Project Structure
-```plaintext
-smartfin/
-├── README.md      
-├── curl
-├── image.png      
-├── jsconfig.json  
-├── next-env.d.ts  
-├── next.config.mjs
-├── package-lock.json
-├── package.json
-├── postcss.config.mjs
-├── prisma
-│   └── schema.prisma
-├── public
-│   └── images
-│       ├── hero.png
-│       ├── laptop.png
-│       ├── logo.png
-│       ├── logo.svg
-│       ├── tablet.png
-│       └── track.png
-├── src
-│   ├── app
-│   │   ├── PrivateRoute.js
-│   │   ├── api
-│   │   │   ├── addTransaction
-│   │   │   │   └── route.js
-│   │   │   └── chatbot
-│   │   │       └── route.js
-│   │   ├── components
-│   │   │   ├── Chatbot.jsx
-│   │   │   ├── FaqSection.jsx
-│   │   │   ├── Feature.jsx
-│   │   │   ├── FeatureSections.jsx
-│   │   │   ├── Footer.jsx
-│   │   │   ├── Hero.jsx
-│   │   │   ├── Loader.jsx
-│   │   │   ├── LoginForm.jsx
-│   │   │   ├── Logout.jsx
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── Testimonial.jsx
-│   │   │   └── trans.jsx
-│   │   ├── dashboard
-│   │   │   ├── DashboardLayout.js
-│   │   │   ├── DashboardPage.jsx
-│   │   │   ├── Logout.jsx
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── Sidebar.jsx
-│   │   │   ├── accounting
-│   │   │   │   └── page.js
-│   │   │   ├── chat
-│   │   │   │   └── page.js
-│   │   │   ├── contacts
-│   │   │   │   └── page.js
-│   │   │   ├── expenses
-│   │   │   │   └── page.js
-│   │   │   ├── file-management
-│   │   │   │   └── page.js
-│   │   │   ├── message
-│   │   │   │   └── page.js
-│   │   │   ├── notifications
-│   │   │   │   └── page.js
-│   │   │   ├── page.js
-│   │   │   ├── pos
-│   │   │   │   └── page.js
-│   │   │   ├── products
-│   │   │   │   └── page.js
-│   │   │   ├── settings
-│   │   │   │   └── page.js
-│   │   │   ├── transact
-│   │   │   │   └── page.js
-│   │   │   └── transactions
-│   │   │       ├── new
-│   │   │       │   └── page.js
-│   │   │       └── page.js
-│   │   ├── globals.css
-│   │   ├── layout.js
-│   │   ├── login
-│   │   │   └── page.js
-│   │   ├── page.js
-│   │   └── signup
-│   │       ├── BusinessForm.js
-│   │       ├── BusinessVerification.js
-│   │       ├── EmailForm.js
-│   │       ├── SignupLayout.js
-│   │       ├── SuccessMessage.js
-│   │       └── page.js
-│   └── lib
-│       ├── firebaseAuth.js
-│       └── prisma.js
-├── tailwind.config.js
-└── tsconfig.json
+   ```env
+   MONGODB_URI=<your_mongodb_uri>
+   NEXTAUTH_SECRET=<your_nextauth_secret>
+   OPENAI_API_KEY=<your_openai_api_key>
+   HEDERA_OPERATOR_ID=<your_hedera_account_id>
+   HEDERA_OPERATOR_KEY=<your_hedera_private_key>
+   TELEGRAM_BOT_TOKEN=<your_telegram_bot_token>
+   GOOGLE_API_KEY=<your_google_api_key>
+   ```
+4. **Start SmartFin API & Web:**
 
-26 directories, 64 files
+   ```bash
+   npm run dev
+   ```
+5. **Launch Telegram Bot Service:**
+
+   ```bash
+   cd bot
+   npm install
+   npm run test-telegram
+   ```
+6. **Interact with SmartFin:** Open Telegram and chat with [@Finnebulabot](https://web.telegram.org/k/#@Finnebulabot).
+
+---
+
+## 📂 Project Structure
+
 ```
+smartfin/
+├── pages/                    # Next.js web app routes and pages
+├── components/               # React UI components
+├── lib/                      # Integration helpers (Hedera, Telegram)
+├── ai/                       # AI insights engine (optional Python services)
+├── prisma/                   # Prisma schema & migrations
+├── public/                   # Static assets (images, icons)
+├── styles/                   # Tailwind CSS configuration
+├── scripts/                  # Utility scripts (migrations, seeds)
+├── .env.example              # Example environment variables
+├── next.config.js
+├── package.json
+└── README.md
+```
+
+---
 
 ## 🌟 Contributors
 
-This project is made possible thanks to the efforts of the following contributors:
+* **Okoye Emmanuel Obiajulu** ([Obiajulu-gif](https://github.com/Obiajulu-gif/))
+* **Ekene Samuel Chinwendu** ([Ekenesamuel8](https://github.com/Ekenesamuel8/))
+* **Okeoma Amaobi** ([OkeyAmy](https://github.com/OkeyAmy))
 
-- [**Obiajulu-gif**](https://github.com/Obiajulu-gif/) - **Okoye Emmanuel Obiajulu**
-- [**Ekenesamuel8**](https://github.com/Ekenesamuel8/) - **Ekene Samuel Chinwendu**
+Contributions welcome! Fork the repo, open a pull request, and join us in revolutionizing financial automation.
 
-If you would like to contribute, please feel free to submit a pull request! If you would like to contribute, please feel free to submit a pull request!
+---
+
+*Empower your business with AI, Hedera, and Telegram — SmartFin makes finance seamless!*
