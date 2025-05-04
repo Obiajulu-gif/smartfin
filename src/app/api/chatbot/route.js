@@ -1,41 +1,70 @@
 import { NextResponse } from "next/server";
-import OpenAI from "openai";
-import dotenv from "dotenv";
+import { cookies } from "next/headers";
 
-// Configure dotenv to load environment variables
-dotenv.config();
+const DEFAULT_USER_ID = "QOJkQvNN3PdiHtuXTSR1l2fWwxj2";
 
-const openai = new OpenAI({
-	apiKey: process.env.OPENAI_API_KEY,
-});
+// API endpoints
+const SMARTFIN_API = "https://smartfin-ai-api.onrender.com/api/v1/conversation";
+const NEBULA_API = "https://nebula-agent.onrender.com/api/conversation";
 
 export async function POST(req) {
-	const { message } = await req.json();
-
+	const { message, operation } = await req.json();
+	
+	// Get user ID from cookies or use default
+	const cookieStore = cookies();
+	const userId = cookieStore.get("userId")?.value || DEFAULT_USER_ID;
+	
 	try {
-		const response = await openai.chat.completions.create({
-			model: "gpt-3.5-turbo",
-			messages: [
-				{
-					role: "system",
-					content:
-						"You are a friendly and knowledgeable financial advisor. Respond professionally, keeping explanations clear and approachable, as if helping someone new to finance understand complex concepts in a supportive way.",
-				},
-				{
-					role: "user",
-					content: `Please provide an answer related to finance: ${message}`,
-				},
-			],
-			max_tokens: 80,
-			temperature: 0.7,
+		// Try the primary Smartfin API first
+		const response = await fetch(`${SMARTFIN_API}/${userId}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ message, operation }),
 		});
-
-		return NextResponse.json({ reply: response.choices[0].message.content });
-	} catch (error) {
-		console.error("Error with OpenAI API:", error);
+		
+		const data = await response.json();
+		
+		if (data.success && data.response) {
+			return NextResponse.json({ 
+				reply: data.response,
+				messages: data.messages || [],
+				source: "smartfin"
+			});
+		}
+		
+		// If Smartfin API fails, try the Nebula API as fallback
+		const fallbackResponse = await fetch(`${NEBULA_API}/${userId}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ message, operation }),
+		});
+		
+		const fallbackData = await fallbackResponse.json();
+		
+		if (fallbackData.success && fallbackData.response) {
+			return NextResponse.json({ 
+				reply: fallbackData.response,
+				messages: fallbackData.messages || [],
+				source: "nebula"
+			});
+		}
+		
+		// If both APIs fail, return error
+		return NextResponse.json(
+			{ error: "Failed to generate response from both APIs" },
+			{ status: 500 }
+		);
+			} catch (error) {
+		console.error("Error with AI APIs:", error);
 		return NextResponse.json(
 			{ error: "Failed to generate response" },
 			{ status: 500 }
 		);
+	}
+}
 	}
 }

@@ -7,6 +7,27 @@ export default function Chatbot() {
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [typingMessage, setTypingMessage] = useState("");
+	const [userId, setUserId] = useState("");
+	const [chatHistory, setChatHistory] = useState([]);
+	
+	useEffect(() => {
+		// Get the user ID from localStorage or generate a default one
+		const storedUserId = localStorage.getItem("userId") || "QOJkQvNN3PdiHtuXTSR1l2fWwxj2"; // Default user ID
+		setUserId(storedUserId);
+		
+		// Load chat history if available
+		const storedMessages = localStorage.getItem("chatMessages");
+		if (storedMessages) {
+			setMessages(JSON.parse(storedMessages));
+		}
+	}, []);
+	
+	// Save messages to localStorage whenever they change
+	useEffect(() => {
+		if (messages.length > 0) {
+			localStorage.setItem("chatMessages", JSON.stringify(messages));
+		}
+	}, [messages]);
 
 	const sendMessage = async () => {
 		if (input.trim() === "") return;
@@ -15,23 +36,75 @@ export default function Chatbot() {
 		setMessages((prev) => [...prev, newMessage]);
 		setInput("");
 		setIsLoading(true);
+		
+		const userMessage = input.trim();
 
 		try {
-			const response = await fetch("/api/chatbot", {
+			// First attempt with Smartfin AI API
+			const response = await fetch(`https://smartfin-ai-api.onrender.com/api/v1/conversation/${userId}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ message: input }),
+				body: JSON.stringify({ message: userMessage }),
 			});
+			
 			const data = await response.json();
-
-			if (data.reply) {
+			
+			// If Smartfin AI API successfully processed the request
+			if (data.success && data.response) {
 				// Initialize the typewriter effect for AI's response
-				typewriterEffect(data.reply);
+				typewriterEffect(data.response);
+				// Update chat history
+				setChatHistory(data.messages || []);
+			} else {
+				// Fallback to Nebula API if Smartfin API fails
+				try {
+					const fallbackResponse = await fetch(`https://nebula-agent.onrender.com/api/conversation/${userId}`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ message: userMessage }),
+					});
+					
+					const fallbackData = await fallbackResponse.json();
+					
+					if (fallbackData.success && fallbackData.response) {
+						typewriterEffect(fallbackData.response);
+					} else {
+						// If both APIs fail, use a default message
+						typewriterEffect("I'm sorry, I couldn't process your request at the moment. Please try again later.");
+					}
+				} catch (fallbackError) {
+					console.error("Fallback API Error:", fallbackError);
+					typewriterEffect("I'm sorry, I couldn't process your request at the moment. Please try again later.");
+				}
 			}
 		} catch (error) {
-			console.error("Error:", error);
+			console.error("Primary API Error:", error);
+			
+			// Attempt with Nebula API as fallback
+			try {
+				const fallbackResponse = await fetch(`https://nebula-agent.onrender.com/api/conversation/${userId}`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ message: userMessage }),
+				});
+				
+				const fallbackData = await fallbackResponse.json();
+				
+				if (fallbackData.success && fallbackData.response) {
+					typewriterEffect(fallbackData.response);
+				} else {
+					typewriterEffect("I'm sorry, I couldn't process your request at the moment. Please try again later.");
+				}
+			} catch (fallbackError) {
+				console.error("Fallback API Error:", fallbackError);
+				typewriterEffect("I'm sorry, I couldn't process your request at the moment. Please try again later.");
+			}
 		} finally {
 			setIsLoading(false);
 		}
@@ -51,10 +124,47 @@ export default function Chatbot() {
 			}
 		}, 30); // Adjust speed for typewriter effect
 	};
+	const clearConversation = async () => {
+		// Clear local messages
+		setMessages([]);
+		localStorage.removeItem("chatMessages");
+		
+		// Attempt to clear conversation on both APIs
+		try {
+			// Clear Smartfin API conversation
+			await fetch(`https://smartfin-ai-api.onrender.com/api/v1/conversation/${userId}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ operation: "clear" }),
+			});
+			
+			// Clear Nebula API conversation
+			await fetch(`https://nebula-agent.onrender.com/api/conversation/${userId}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ operation: "clear" }),
+			});
+			
+		} catch (error) {
+			console.error("Error clearing conversation history:", error);
+		}
+	};
 
 	return (
-		<div className="flex flex-col items-center p-2  space-y-2 bg-white shadow-lg rounded-lg max-w-md w-full mx-auto my-2 sm:my-2">
-			<h2 className="text-2xl font-bold text-indigo-600">AI Chatbot</h2>
+		<div className="flex flex-col items-center p-2 space-y-2 bg-white shadow-lg rounded-lg max-w-md w-full mx-auto my-2 sm:my-2">
+			<div className="flex items-center justify-between w-full px-2">
+				<h2 className="text-2xl font-bold text-indigo-600">AI Chatbot</h2>
+				<button 
+					onClick={clearConversation}
+					className="text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1 rounded"
+				>
+					Clear Chat
+				</button>
+			</div>
 
 			<div className="flex flex-col space-y-2 w-full bg-gray-100 p-4 rounded-lg overflow-y-auto h-80 sm:h-96">
 				{messages.map((msg, index) => (
