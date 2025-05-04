@@ -6,10 +6,12 @@ const Navbar = dynamic(() => import("./components/Navbar"), { ssr: false });
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body>
+			<body className="min-h-screen bg-gray-50">
 				<Navbar />
-				<main className="pt-16"> {children} </main>{" "}
-			</body>{" "}
+				<main className="pt-16">
+					{children}
+				</main>
+			</body>
 		</html>
 	);
 }
