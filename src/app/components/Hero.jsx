@@ -22,13 +22,15 @@ export default function Hero() {
 	}, [fullText]);
 
 	return (
-		<section className="relative  bg-gradient-to-br from-white to-purple-50 p-8 md:p-16 flex flex-col md:flex-row items-center">
+		<section className="relative bg-gradient-to-br from-white to-purple-50 p-8 md:p-16 flex flex-col md:flex-row items-center">
 			{/* Text Content */}
-			<div className="md:w-1/2 space-y-4 z--10">
-				<div className="inline-block bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-semibold text-sm">
+			<div className="md:w-1/2 space-y-6 z-10 animate-fadeUp">
+				<div className="inline-block bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-semibold text-sm animate-pulse">
 					🔥 AI-IN-ONE FINANCE TOOL
 				</div>
-				<h1 className="text-4xl md:text-5xl font-bold text-gray-900">{text}</h1>
+				<h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 drop-shadow-lg leading-tight">
+					{text}
+				</h1>
 				<p className="text-gray-700">
 					Record transactions, manage finances, track inventory, and create
 					reports—all in one place
@@ -36,27 +38,27 @@ export default function Hero() {
 				<p className="italic text-gray-500">
 					No more record books, no more errors, just time saved.
 				</p>
-				<div className="flex space-x-4">
+				<div className="flex space-x-4 animate-fadeUp delay-300">
 					<Link href="/signup" passHref>
-						<button className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 animate-bounce">
+						<button className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 animate-glow">
 							Get Started
 						</button>
 					</Link>
-					<button className="px-6 py-3 bg-transparent text-gray-900 border border-gray-400 rounded-lg font-medium hover:border-gray-900">
+					<button className="px-6 py-3 bg-transparent text-gray-900 border border-gray-400 rounded-lg font-medium hover:border-gray-900 animate-glow">
 						Book Demo
 					</button>
 				</div>
 			</div>
 
 			{/* Image Content for Desktop Only */}
-			<div className="hidden md:flex md:w-1/2 relative justify-center">
+			<div className="hidden md:flex md:w-1/2 relative justify-center animate-float">
 				<div className="relative rounded overflow-hidden p-1">
 					<Image
 						src="/images/hero.png"
 						alt="Person using a POS system"
 						width={1000}
 						height={1000}
-						className="rounded-full"
+						className="rounded-full shadow-xl"
 					/>
 					{/* Overlay Graph */}
 					<div className="absolute z-10 top-0 left-10 bg-white p-4 rounded-lg shadow-lg transform -translate-x-8 translate-y-8">
@@ -82,7 +84,7 @@ export default function Hero() {
 
 			{/* Mobile Background Image */}
 			<div
-				className="absolute z-10 inset-0 md:hidden bg-cover bg-center bg-no-repeat  opacity-10"
+				className="absolute z-0 inset-0 md:hidden bg-cover bg-center bg-no-repeat opacity-20 animate-fadeIn"
 				style={{ backgroundImage: "url(/images/hero.png)" }}
 			>
 				{/* This is the background image. Replace 'mobile-background.jpg' with the path to your actual background image */}

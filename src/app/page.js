@@ -5,6 +5,7 @@ import FeatureSections from "./components/FeatureSections";
 import Testimonials from "./components/Testimonial";
 import FaqSection from "./components/FaqSection";
 import Footer from "./components/Footer";
+import Pricing from "./components/Pricing";
 export const metadata = {
 	title: "SmartFin - AI-Powered Financial Management & Booking App",
 	description:
@@ -43,6 +44,7 @@ export default function Home() {
 				<Hero />
 				<Features />
 				<FeatureSections />
+				<Pricing />
 				<Testimonials />
 				<FaqSection />
 				<Footer />

@@ -1,5 +1,5 @@
 // components/FaqSection.js
-"use client"
+"use client";
 import { useState } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 
@@ -38,8 +38,9 @@ export default function FaqSection() {
 		setOpenIndex(openIndex === index ? null : index);
 	};
 
+	// Add gradient background and smooth accordion animations
 	return (
-		<section className="bg-gray-50 py-16 px-8 md:px-24">
+		<section className="bg-gradient-to-br from-gray-50 to-indigo-50 py-16 px-8 md:px-24">
 			<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
 				Frequently Asked Questions
 			</h2>
@@ -48,7 +49,7 @@ export default function FaqSection() {
 					<div key={index} className="border-b border-gray-200">
 						<button
 							onClick={() => toggleFaq(index)}
-							className="w-full py-4 text-left flex items-center justify-between bg-white text-gray-900 font-medium hover:text-indigo-600 focus:outline-none"
+							className="w-full py-4 text-left flex items-center justify-between bg-white text-gray-900 font-medium hover:text-indigo-600 focus:outline-none transition-all duration-300 ease-in-out"
 						>
 							<span>{faq.question}</span>
 							{openIndex === index ? (
@@ -58,7 +59,9 @@ export default function FaqSection() {
 							)}
 						</button>
 						{openIndex === index && (
-							<div className="p-4 text-gray-700 bg-gray-50">{faq.answer}</div>
+							<div className="p-4 text-gray-700 bg-gray-50 transition-all duration-300 ease-in-out">
+								{faq.answer}
+							</div>
 						)}
 					</div>
 				))}

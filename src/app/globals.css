@@ -19,6 +19,11 @@
   }
 }
 
+/* Add smooth scrolling for modern feel */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: var(--foreground);
   background-color: var(--background);

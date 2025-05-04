@@ -10,26 +10,26 @@ import {
 
 export default function FeatureSections() {
 	return (
-		<section className="bg-gray-50 py-16 px-8 md:px-24 space-y-16">
+		<section className="bg-gradient-to-br from-gray-50 to-indigo-50 py-16 px-8 md:px-24 space-y-16">
 			{/* Invoicing Section */}
 			<div className="flex flex-col md:flex-row items-center md:space-x-8">
 				<div className="md:w-1/2 mb-8 md:mb-0">
-					<div className="p-4 bg-white rounded-lg shadow-lg border border-gray-200">
+					<div className="p-4 bg-white rounded-lg shadow-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-300">
 						<Image
 							src="/images/laptop.png" // Replace with your actual image path
 							alt="SmartFin Invoice on Laptop and Mobile"
 							width={500}
 							height={400}
-							className="w-full rounded-lg"
+							className="w-full rounded-lg hover:scale-105 transition-transform duration-300"
 						/>
 					</div>
 					<div className="flex justify-around mt-4">
 						<div className="text-center">
-							<FaFilePdf className="text-2xl text-gray-600" />
+							<FaFilePdf className="text-2xl text-gray-600 hover:text-indigo-600 transition-colors duration-300" />
 							<p>Save as PDF</p>
 						</div>
 						<div className="text-center">
-							<FaPaperPlane className="text-2xl text-gray-600" />
+							<FaPaperPlane className="text-2xl text-gray-600 hover:text-indigo-600 transition-colors duration-300" />
 							<p>Send Invoice</p>
 						</div>
 					</div>
@@ -48,7 +48,7 @@ export default function FeatureSections() {
 						<li>Up to 50% reduction in payment delays</li>
 						<li>Avoid cash flow issues due to delayed payments</li>
 					</ul>
-					<button className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700">
+					<button className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors duration-300">
 						Learn More
 					</button>
 				</div>
@@ -70,13 +70,13 @@ export default function FeatureSections() {
 					</ul>
 				</div>
 				<div className="md:w-1/2 mb-8 md:mb-0 md:order-2">
-					<div className="p-4 bg-white rounded-lg shadow-lg border border-gray-200">
+					<div className="p-4 bg-white rounded-lg shadow-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-300">
 						<Image
 							src="/images/track.png" // Replace with your actual image path
 							alt="SmartFin Expense Tracking on Tablet"
 							width={500}
 							height={400}
-							className="w-full rounded-lg"
+							className="w-full rounded-lg hover:scale-105 transition-transform duration-300"
 						/>
 					</div>
 				</div>
@@ -85,13 +85,13 @@ export default function FeatureSections() {
 			{/* Business Growth Section */}
 			<div className="flex flex-col md:flex-row items-center md:space-x-8">
 				<div className="md:w-1/2 mb-8 md:mb-0">
-					<div className="p-4 bg-white rounded-lg shadow-lg border border-gray-200 flex items-center">
+					<div className="p-4 bg-white rounded-lg shadow-lg border border-gray-200 flex items-center hover:shadow-2xl transition-shadow duration-300">
 						<Image
 							src="/images/tablet.png"
 							alt="SmartFin Business Growth on Mobile"
 							width={500}
 							height={400}
-							className="w-full rounded-lg"
+							className="w-full rounded-lg hover:scale-105 transition-transform duration-300"
 						/>
 					</div>
 				</div>
@@ -109,7 +109,7 @@ export default function FeatureSections() {
 						<li>Track Expenses, Purchases, and Payments</li>
 						<li>Manage other inflows like investments and loans</li>
 					</ul>
-					<button className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700">
+					<button className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors duration-300">
 						Learn More
 					</button>
 				</div>
