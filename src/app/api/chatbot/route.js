@@ -58,13 +58,11 @@ export async function POST(req) {
 			{ error: "Failed to generate response from both APIs" },
 			{ status: 500 }
 		);
-			} catch (error) {
+		} catch (error) {
 		console.error("Error with AI APIs:", error);
 		return NextResponse.json(
 			{ error: "Failed to generate response" },
 			{ status: 500 }
 		);
-	}
-}
 	}
 }

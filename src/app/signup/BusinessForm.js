@@ -50,9 +50,10 @@ const BusinessForm = () => {
         placeholder = "Business Name"
         value = { businessName }
         onChange = {
-            (e) => setBusinessName(e.target.value) }
-        /> <
-        /div> <
+            (e) => setBusinessName(e.target.value)
+        }
+        /> < /
+        div > <
         div >
         <
         label htmlFor = "businessEmail"
@@ -65,9 +66,10 @@ const BusinessForm = () => {
         placeholder = "Business Email"
         value = { businessEmail }
         onChange = {
-            (e) => setBusinessEmail(e.target.value) }
-        /> <
-        /div>
+            (e) => setBusinessEmail(e.target.value)
+        }
+        /> < /
+        div >
 
         <
         div >
@@ -82,9 +84,10 @@ const BusinessForm = () => {
         placeholder = "Password"
         value = { password }
         onChange = {
-            (e) => setPassword(e.target.value) }
-        /> <
-        /div>
+            (e) => setPassword(e.target.value)
+        }
+        /> < /
+        div >
 
         <
         div >
@@ -99,9 +102,10 @@ const BusinessForm = () => {
         placeholder = "Confirm Password"
         value = { confirmPassword }
         onChange = {
-            (e) => setConfirmPassword(e.target.value) }
-        /> <
-        /div>
+            (e) => setConfirmPassword(e.target.value)
+        }
+        /> < /
+        div >
 
         <
         div >
@@ -115,8 +119,8 @@ const BusinessForm = () => {
         placeholder = "Business Type" /
         >
         <
-        /div> <
-        /div>
+        /div> < /
+        div >
 
         <
         div >
@@ -124,34 +128,13 @@ const BusinessForm = () => {
         button type = "submit"
         className = "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" >
         Create Account <
-        /button> <
-        /div> <
-        /form> <
-        /div>
+        /button> < /
+        div > <
+        /form> < /
+        div >
     );
 };
 
 export default BusinessForm;
-/> <
-input
-type = "password"
-placeholder = "Password"
-className = "w-full p-3 border border-black rounded-lg focus:outline-none focus:border-orange-500" /
-    >
-    <
-    input
-type = "password"
-placeholder = "Confirm Password"
-className = "w-full p-3 border border-black rounded-lg focus:outline-none focus:border-orange-500" /
-    >
-    <
-    button
-type = "submit"
-className = "w-full bg-indigo-500 text-white py-3 rounded-lg hover:bg-indigo-600 transition-colors" >
-    Continue <
-    /button> <
-    /form> <
-    /div>
-);
 
 export default BusinessForm;
