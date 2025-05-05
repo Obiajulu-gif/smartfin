@@ -1,12 +1,27 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+// Check if API key exists before initializing OpenAI
+const apiKey = process.env.OPENAI_API_KEY;
+let openai;
+
+if (apiKey) {
+    openai = new OpenAI({
+        apiKey: apiKey,
+    });
+}
 
 export async function POST(req) {
     try {
+        // Check if OpenAI is properly initialized
+        if (!openai) {
+            console.error("OpenAI API key is missing");
+            return NextResponse.json(
+                { error: "OpenAI API key is not configured. Please set the OPENAI_API_KEY environment variable." },
+                { status: 500 }
+            );
+        }
+
         const body = await req.json();
         const userMessage = body.message;
 
@@ -23,6 +38,9 @@ export async function POST(req) {
         return NextResponse.json({ message: responseMessage });
     } catch (error) {
         console.error("Error in chatbot API:", error);
-        return NextResponse.json({ error: "Failed to process chatbot request" }, { status: 500 });
+        return NextResponse.json(
+            { error: "Failed to process chatbot request" },
+            { status: 500 }
+        );
     }
 }
