@@ -1,62 +1,31 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import OpenAI from "openai";
 
-const DEFAULT_USER_ID = "QOJkQvNN3PdiHtuXTSR1l2fWwxj2";
-
-// API endpoints
-const SMARTFIN_API = "https://smartfin-ai-api.onrender.com/api/v1/conversation";
-const NEBULA_API = "https://nebula-agent.onrender.com/api/conversation";
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export async function POST(req) {
-    const { message, operation } = await req.json();
+  try {
+    const body = await req.json();
+    const userMessage = body.message;
 
-    // Get user ID from cookies or use default
-    const cookieStore = cookies();
-    const userId = cookieStore.get("userId") ? .value || DEFAULT_USER_ID;
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: "You are a helpful financial assistant." },
+        { role: "user", content: userMessage },
+      ],
+    });
 
-    try {
-        // Try the primary Smartfin API first
-        const response = await fetch(`${SMARTFIN_API}/${userId}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ message, operation }),
-        });
+    const responseMessage = completion.choices[0].message.content;
 
-        const data = await response.json();
-
-        if (data.success && data.response) {
-            return NextResponse.json({
-                reply: data.response,
-                messages: data.messages || [],
-                source: "smartfin"
-            });
-        }
-
-        // If Smartfin API fails, try the Nebula API as fallback
-        const fallbackResponse = await fetch(`${NEBULA_API}/${userId}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ message, operation }),
-        });
-
-        const fallbackData = await fallbackResponse.json();
-
-        if (fallbackData.success && fallbackData.response) {
-            return NextResponse.json({
-                reply: fallbackData.response,
-                messages: fallbackData.messages || [],
-                source: "nebula"
-            });
-        }
-
-        // If both APIs fail, return error
-        return NextResponse.json({ error: "Failed to generate response from both APIs" }, { status: 500 });
-    } catch (error) {
-        console.error("Error with AI APIs:", error);
-        return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
-    }
+    return NextResponse.json({ message: responseMessage });
+  } catch (error) {
+    console.error("Error in chatbot API:", error);
+    return NextResponse.json(
+      { error: "Failed to process chatbot request" },
+      { status: 500 }
+    );
+  }
 }
